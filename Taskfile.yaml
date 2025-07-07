@@ -1,0 +1,51 @@
+version: "3"
+
+tasks:
+  default:
+    - task: help
+
+  dev:
+    desc: Run the application in development mode
+    cmds:
+      - uv run fastapi dev
+
+  prod:
+    desc: Run the application in production mode
+    cmds:
+      - uv run uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+
+  install:
+    desc: Install the virtual environment and install the pre-commit hooks
+    cmds:
+      - uv sync
+      - uv run pre-commit install
+
+  check:
+    desc: Run code quality tools.
+    cmds:
+      - uv lock --locked
+      - uv run pre-commit run -a
+      - uv run pyrefly check
+      - uv run deptry app
+      - uv run pip-audit
+
+  test:
+    desc: Test the code with pytest
+    cmds:
+      - uv run python -m pytest --doctest-modules
+
+  build:
+    desc: Build wheel file
+    cmds:
+      - task: clean-build
+      - uvx --from build pyproject-build --installer uv
+
+  clean-build:
+    desc: Clean build artifacts
+    cmds:
+      - uv run python -c "import shutil; import os; shutil.rmtree('dist') if os.path.exists('dist') else None"
+
+  help:
+    desc: Display this help message
+    cmds:
+      - task --list-all
