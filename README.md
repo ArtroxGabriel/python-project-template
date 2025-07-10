@@ -1,117 +1,146 @@
 # Python Project Template
 
-Um template moderno, robusto e opinativo para iniciar novos projetos em Python.
-Este projeto vem pré-configurado com um conjunto de ferramentas para gestão de
-dependências, formatação de código, linting, análise estática e testes para garantir
-um código de alta qualidade e um fluxo de desenvolvimento produtivo.
+Uma template de projeto FastAPI, agora utilizando `venv` e `pip` para gerenciamento
+de dependências e execução manual.
 
-## ✨ Funcionalidades
+## Pré-requisitos
 
-- **Framework Web**: [FastAPI](https://fastapi.tiangolo.com/) para construir APIs
-  de alta performance.
-- **Gestão de Dependências**: [uv](https://github.com/astral-sh/uv) para uma instalação
-  e resolução de pacotes extremamente rápida.
-- **Qualidade de Código**:
+- **Python 3.9+**: Certifique-se de ter uma versão compatível do Python instalada.
+  Você pode verificar sua versão com:
 
-  - [Ruff](https://github.com/astral-sh/ruff) como linter e formatador de código,
-    tudo-em-um e extremamente rápido.
-  - [pyrefly](https://pyrefly.org/) para verificação estática de tipos.
-  - [pre-commit](https://pre-commit.com/) para executar verificações de qualidade
-    antes de cada commit.
-  - [deptry](https://github.com/fpgmaas/deptry) para verificar dependências obsoletas
-    e em falta.
-  - [pip-audit](https://pypi.org/project/pip-audit/) Uma ferramenta para
-    auditar ambientes Python em busca de vulnerabilidades conhecidas.
+  ```bash
+  python --version
+  ```
 
-- **Testes**:
-  - [pytest](https://docs.pytest.org/) para escrever e executar testes de forma
-    eficiente.
-- **Ambiente de Desenvolvimento**:
-  - [Task](https://taskfile.dev/) para aliases de comandos simples e fáceis de usar,
-    simplificando as tarefas do dia a dia.
+## Instalação e Configuração
 
-## 🚀 Começar
+Siga estes passos para configurar o ambiente de desenvolvimento:
 
-Siga estas instruções para colocar o ambiente de desenvolvimento a postos.
-
-### Pré-requisitos
-
-- Python 3.9+
-- [uv](https://docs.astral.sh/uv/getting-started/installation/) um gerenciador de
-  pacote e projeto em python
-- [Task](https://taskfile.dev/installation/) (um executor de tarefas moderno)
-
-### Instalação
-
-1. **Clone o repositório:**
+1. **Clone o Repositório**:
 
    ```sh
-   git clone <URL_DO_SEU_REPOSITORIO>
-   cd <NOME_DO_DIRETORIO>
+   git clone [https://github.com/artroxgabriel/python-project-template.git](https://github.com/artroxgabriel/python-project-template.git)
+   cd python-project-template
    ```
 
-2. **Instale o ambiente e as dependências:**
-   Este comando irá utilizar o `uv` para criar um ambiente virtual (`.venv`), instalar
-   todas as dependências de produção e desenvolvimento, e configurar os hooks de
-   `pre-commit`.
+2. **Crie e Ative o Ambiente Virtual**:
+   Recomendamos o uso de um ambiente virtual para isolar as dependências do projeto.
+   - **Crie o ambiente virtual**:
+
+     ```bash
+     python -m venv .venv
+     ```
+
+   - **Ative o ambiente virtual**:
+     - **Linux / macOS**:
+
+       ```sh
+       source .venv/bin/activate
+       ```
+
+     - **Windows (Prompt de Comando)**:
+
+       ```sh
+       .\.venv\Scripts\activate.bat
+       ```
+
+     - **Windows (PowerShell)**:
+
+       ```powershell
+       .\.venv\Scripts\Activate.ps1
+       ```
+
+   - Seu terminal deve mostrar `(.venv)` no prompt, indicando que o ambiente está
+     ativo.
+
+3. **Instale as Dependências**:
+   Primeiro, atualize o `pip` para garantir a versão mais recente:
 
    ```sh
-   task install
+   pip install --upgrade pip
    ```
 
-### Configuração do VS Code
-
-Após a instalação, é crucial configurar o seu VS Code para utilizar o interpretador
-Python do ambiente virtual recém-criado (`.venv`) para que o linting, a formatação
-e a depuração funcionem corretamente.
-
-1. Abra a Paleta de Comandos: `Ctrl+Shift+P` (ou `Cmd+Shift+P` no macOS).
-2. Digite e selecione a opção **Python: Select Interpreter**.
-3. Escolha o interpretador que contém `.venv` no caminho (ex: `./.venv/bin/python`).
-   O VS Code geralmente sugere este interpretador automaticamente como recomendado.
-
-#### ambiente de desenvolvimento python
-
-Para acessar o ambiente de desenvolvimento:
-
-1. execute o comando
+   Em seguida, instale as dependências de desenvolvimento e produção listadas em
+   `requirements-dev.txt`:
 
    ```sh
-   source .venv/bin/activate
+   pip install -r requirements-dev.txt
    ```
 
-2. para sair do ambiente de desenvolvimento
+   (Se você precisar apenas das dependências de produção para um ambiente de deployment,
+   use `pip install -r requirements.txt`.)
+
+4. **Instale os Hooks de Pré-commit**:
+   Os hooks de pré-commit garantem que o código siga os padrões definidos antes de
+   cada commit.
 
    ```sh
-   deactivate
+   pre-commit install
    ```
 
-## 🛠️ Utilização
+## Ambiente de Desenvolvimento
 
-Este projeto utiliza o `Taskfile.yml` para fornecer comandos simples para tarefas
-comuns de desenvolvimento.
+Para trabalhar no projeto, sempre ative o ambiente virtual conforme o passo 2 da
+instalação.
 
-### Comandos Principais
+- Para desativar o ambiente virtual a qualquer momento:
 
-- `task dev`
-  Executa a aplicação em **modo de desenvolvimento** com hot-reload. A API estará
-  disponível em `http://127.0.0.1:8000`.
+  ```sh
+  deactivate
+  ```
 
-- `task prod`
-  Executa a aplicação em **modo de produção**.
+## Utilização
 
-- `task check`
-  Executa todas as **ferramentas de qualidade de código**, incluindo verificações
-  de lockfile, pre-commit hooks, pyrefly e deptry.
+Aqui estão os comandos para executar as tarefas comuns do projeto:
 
-- `task test`
-  Executa a **suite de testes** com `pytest`.
+### 1. Executar a Aplicação em Modo de Desenvolvimento
 
-- `task build`
-  **Cria os pacotes de distribuição** (wheel) do projeto na pasta `dist/`.
+Isso iniciará o servidor FastAPI com recarregamento automático em caso de alterações
+no código.
 
-- `task help`
-  Mostra a lista de **todos os comandos disponíveis** e as suas descrições.
+```sh
+# Certifique-se de que o ambiente virtual está ativo
+fastapi dev
+```
 
-Para ver todos os comandos disponíveis, pode inspecionar o ficheiro `Taskfile.yml`
-ou correr `task --list-all`.
+O servidor estará disponível em [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
+### 2. Executar a Aplicação em Modo de Produção
+
+Isso iniciará o servidor Uvicorn com 4 workers.
+
+```sh
+# Certifique-se de que o ambiente virtual está ativo
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+```
+
+### 3. Executar a Aplicação em Modo de Produção
+
+Execute essas ferramentas para verificar a qualidade e segurança do seu código.
+
+```sh
+# Certifique-se de que o ambiente virtual está ativo
+check.bat
+```
+
+### 4. Executar a Aplicação em Modo de Produção
+
+Execute os testes unitários e de integração do projeto.
+
+```sh
+# Certifique-se de que o ambiente virtual está ativo
+pytest --doctest-modules .
+```
+
+### 5. Construir o Pacote (Wheel e sdist)
+
+Isso criará os arquivos de distribuição do seu pacote (`.whl` e `.tar.gz`) na pasta
+`dist/.`
+
+```sh
+# Primeiro, limpe os artefatos de build antigos
+python -c "import shutil; import os; shutil.rmtree('dist') if os.path.exists('dist' )else None"
+
+# Em seguida, construa o pacote
+python -m build --wheel --sdist
+```

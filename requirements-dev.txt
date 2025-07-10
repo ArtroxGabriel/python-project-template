@@ -1,0 +1,7 @@
+pytest>=7.2.0
+pre-commit>=2.20.0
+deptry>=0.23.0
+ruff>=0.11.5
+pyrefly>=0.23.0
+pip-audit>=2.9.0
+-r requirements.txt
